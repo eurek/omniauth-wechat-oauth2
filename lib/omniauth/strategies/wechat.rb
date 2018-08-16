@@ -7,7 +7,8 @@ module OmniAuth
 
       option :client_options, {
         site:          "https://api.weixin.qq.com",
-        authorize_url: "https://open.weixin.qq.com/connect/oauth2/authorize#wechat_redirect",
+        # authorize_url: "https://open.weixin.qq.com/connect/oauth2/authorize#wechat_redirect",
+        authorize_url: "https://open.weixin.qq.com/connect/qrconnect/authorize#wechat_redirect",
         token_url:     "/sns/oauth2/access_token",
         token_method:  :get
       }
@@ -59,10 +60,10 @@ module OmniAuth
       protected
       def build_access_token
         params = {
-          'appid' => client.id, 
+          'appid' => client.id,
           'secret' => client.secret,
           'code' => request.params['code'],
-          'grant_type' => 'authorization_code' 
+          'grant_type' => 'authorization_code'
           }.merge(token_params.to_hash(symbolize_keys: true))
         client.get_token(params, deep_symbolize(options.auth_token_params))
       end
